@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  --font-sans: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-ink: #05071a;
+  --color-night: #0a1030;
+  --color-sakura: #ff9fbf;
+  --color-aurora: #7ff0ff;
+  --color-solar: #ffcf7a;
+  --color-violet: #a99bff;
+  --color-ember: #ff7a8a;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.6s ease-out infinite;
+  --animate-drift: drift 60s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(1.2deg); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes orbit-rev {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #05071a;
+}
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: #e8ecff;
+  background: #05071a;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(255, 159, 191, 0.4); color: #fff; }
+
+.font-display { font-family: var(--font-display); }
+
+/* Anime-style soft title glow */
+.title-glow {
+  text-shadow: 0 0 40px rgba(127, 240, 255, 0.25), 0 2px 30px rgba(255, 159, 191, 0.25);
+}
+
+.glass {
+  background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #ffcf7a, #ff9fbf, #a99bff, #7ff0ff, #ffcf7a);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 9s linear infinite;
+}
+
+.vertical-jp {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.35em;
+}
+
+.orbit-spin { animation: orbit linear infinite; }
+.orbit-counter { animation: orbit-rev linear infinite; }
+.orbit-system:hover .orbit-spin,
+.orbit-system:hover .orbit-counter { animation-play-state: paused; }
+
+.card-tilt { transition: transform 0.5s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s; }
+.card-tilt:hover { transform: translateY(-6px); }
+
+.flip-card { perspective: 1200px; }
+.flip-inner { transition: transform 0.8s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
+.flip-card[data-flipped="true"] .flip-inner { transform: rotateY(180deg); }
+.flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flip-back { transform: rotateY(180deg); }
+
+.scroll-hide::-webkit-scrollbar { display: none; }
+.scroll-hide { scrollbar-width: none; }
+
+:focus-visible {
+  outline: 2px solid #7ff0ff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
