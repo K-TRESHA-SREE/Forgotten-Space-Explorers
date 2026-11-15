@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { destinations, equipmentForDestination, getDestination, type DestinationId } from "../data";
 import { StatusBadge } from "./StatusBadge";
+import { WatermarkedImage } from "./WatermarkedImage";
 
 type Body = {
   key: string;
@@ -42,16 +43,16 @@ function Spin({ size, dur, delay, children, className = "" }: { size: number; du
       className={`pointer-events-none absolute rounded-full ${className}`}
       style={{ left: "50%", top: "50%", width: `${size}%`, height: `${size}%`, transform: "translate(-50%,-50%)" }}
     >
-      <div className="orbit-spin pointer-events-none absolute inset-0" style={style}>
+      <div className="orbit-spin pointer-events-none absolute left-1/2 top-1/2 h-0 w-0" style={style}>
         {children}
       </div>
     </div>
   );
 }
 
-function Pin({ dur, delay, children }: { dur: number; delay: number; children: ReactNode }) {
+function Pin({ dur, delay, radius, children }: { dur: number; delay: number; radius: number; children: ReactNode }) {
   return (
-    <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+    <div className="pointer-events-none absolute left-0 -translate-x-1/2 -translate-y-1/2" style={{ top: `${-radius}cqw` }}>
       <div className="orbit-counter" style={{ animationDuration: `${dur}s`, animationDelay: `${delay}s` }}>
         {children}
       </div>
@@ -80,7 +81,7 @@ export function SolarSystem() {
 
   const Label = ({ children, active }: { children: ReactNode; active?: boolean }) => (
     <span
-      className={`pointer-events-none absolute left-1/2 top-full mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[9px] tracking-wider backdrop-blur sm:text-[11px] ${
+      className={`pointer-events-none absolute left-1/2 top-full mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-full py-0.5 text-[9px] tracking-normal backdrop-blur sm:px-2 sm:text-[11px] sm:tracking-wider ${
         active ? "bg-aurora/90 font-bold text-[#05071a]" : "bg-black/40 text-white/75"
       }`}
     >
@@ -93,7 +94,6 @@ export function SolarSystem() {
     return (
       <button
         onClick={() => pick(id)}
-        onFocus={() => undefined}
         aria-label={`Explore ${label}`}
         aria-controls="destination-details"
         aria-pressed={active}
@@ -102,7 +102,7 @@ export function SolarSystem() {
         style={style}
       >
         {children}
-        <span className="absolute -inset-2 rounded-full border border-aurora/60 animate-pulse-ring" />
+        <span className="orbit-target-ring absolute -inset-2 rounded-full border border-aurora/60" />
         {active && <span className="absolute -inset-1.5 rounded-full border-2 border-aurora shadow-[0_0_18px_#7ff0ff]" />}
         <Label active={active}>{label}</Label>
       </button>
@@ -114,7 +114,7 @@ export function SolarSystem() {
       {/* ───────── Orrery ───────── */}
       <div>
         <div
-          className="orbit-system relative mx-auto aspect-square w-full max-w-[760px] select-none"
+          className="orbit-system relative mx-auto aspect-square w-[calc(100%-2rem)] max-w-[760px] select-none sm:w-[calc(100%-1rem)] lg:w-full"
           style={{ containerType: "inline-size" }}
         >
           {/* faint disc glow */}
@@ -134,7 +134,7 @@ export function SolarSystem() {
           {/* Orbit rings + inner planets */}
           {BODIES.map((b) => (
             <Spin key={b.key} size={b.size} dur={b.dur} delay={b.delay} className="border border-white/10">
-              <Pin dur={b.dur} delay={b.delay}>
+              <Pin dur={b.dur} delay={b.delay} radius={b.size / 2}>
                 {b.dest ? (
                   <DestButton id={b.dest} label={b.label} style={{ width: `${b.d}cqw`, height: `${b.d}cqw`, background: b.bg, boxShadow: "inset -4px -4px 8px rgba(0,0,0,.45)" }} />
                 ) : (
@@ -145,17 +145,15 @@ export function SolarSystem() {
                     {/* Earth's Moon */}
                     {b.key === "earth" && (
                       <div className="absolute left-1/2 top-1/2 h-0 w-0">
-                        <div className="absolute rounded-full border border-white/10" style={{ width: "9cqw", height: "9cqw", left: "-4.5cqw", top: "-4.5cqw" }}>
-                          <div className="orbit-spin absolute inset-0" style={{ animationDuration: "9s" }}>
-                            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-                              <div className="orbit-counter" style={{ animationDuration: "9s" }}>
-                                <DestButton
-                                  id="moon"
-                                  label="Moon"
-                                  style={{ width: "1.9cqw", height: "1.9cqw", background: "radial-gradient(circle at 30% 30%,#fff,#b8bdd0 60%,#6d7186)", minWidth: 14, minHeight: 14 }}
-                                />
-                              </div>
-                            </div>
+                        <div className="absolute left-1/2 top-1/2 rounded-full border border-white/10" style={{ width: "9cqw", height: "9cqw", transform: "translate(-50%,-50%)" }}>
+                          <div className="orbit-spin absolute left-1/2 top-1/2 h-0 w-0" style={{ animationDuration: "9s" }}>
+                            <Pin dur={9} delay={0} radius={4.5}>
+                              <DestButton
+                                id="moon"
+                                label="Moon"
+                                style={{ width: "1.9cqw", height: "1.9cqw", background: "radial-gradient(circle at 30% 30%,#fff,#b8bdd0 60%,#6d7186)", minWidth: 14, minHeight: 14 }}
+                              />
+                            </Pin>
                           </div>
                         </div>
                       </div>
@@ -173,23 +171,21 @@ export function SolarSystem() {
               <span
                 key={i}
                 className="absolute rounded-full bg-[#cdbfa8]"
-                style={{ left: `${a.x}%`, top: `${a.y}%`, width: `${a.s}cqw`, height: `${a.s}cqw`, opacity: a.o, transform: "translate(-50%,-50%)" }}
+                style={{ left: `${(a.x - 50) * 0.5}cqw`, top: `${(a.y - 50) * 0.5}cqw`, width: `${a.s}cqw`, height: `${a.s}cqw`, opacity: a.o, transform: "translate(-50%,-50%)" }}
               />
             ))}
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-              <div className="orbit-counter" style={{ animationDuration: "160s" }}>
-                <DestButton
-                  id="asteroids"
-                  label="Asteroids"
-                  style={{ width: "2.4cqw", height: "2.4cqw", background: "radial-gradient(circle at 30% 30%,#d9cdb8,#8a7d6a 60%,#4d4438)", borderRadius: "40% 60% 55% 45%", minWidth: 16, minHeight: 16 }}
-                />
-              </div>
-            </div>
+            <Pin dur={160} delay={0} radius={25}>
+              <DestButton
+                id="asteroids"
+                label="Asteroids"
+                style={{ width: "2.4cqw", height: "2.4cqw", background: "radial-gradient(circle at 30% 30%,#d9cdb8,#8a7d6a 60%,#4d4438)", borderRadius: "40% 60% 55% 45%", minWidth: 16, minHeight: 16 }}
+              />
+            </Pin>
           </Spin>
 
           {/* Deep space ring */}
           <Spin size={97} dur={260} delay={-70} className="border border-dashed border-violet/30">
-            <Pin dur={260} delay={-70}>
+            <Pin dur={260} delay={-70} radius={48.5}>
               <DestButton id="deep-space" label="Deep Space" style={{ width: "3.2cqw", height: "3.2cqw", minWidth: 20, minHeight: 20 }}>
                 <svg viewBox="0 0 24 24" className="h-full w-full" fill="none" stroke="#a99bff" strokeWidth="1.6" aria-hidden>
                   <circle cx="12" cy="12" r="5" fill="#a99bff22" />
@@ -205,7 +201,7 @@ export function SolarSystem() {
       </div>
 
       {/* ───────── Destination panel ───────── */}
-      <div id="destination-details" ref={destinationPanel} className="min-h-[28rem] scroll-mt-24">
+      <div id="destination-details" ref={destinationPanel} className="min-h-[28rem] min-w-0 scroll-mt-24">
         <div className="mb-5 flex flex-wrap gap-2" role="tablist" aria-label="Destinations">
           {destinations.map((d) => (
             <button
@@ -234,7 +230,7 @@ export function SolarSystem() {
               className="glass overflow-hidden rounded-3xl"
             >
               <div className="relative h-40 overflow-hidden">
-                <img src={dest.image} alt="" className="h-full w-full object-cover" />
+                <WatermarkedImage src={dest.image} alt="" className="absolute inset-0" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a1030] to-transparent" />
                 <div className="absolute bottom-3 left-6">
                   <h3 className="font-display text-3xl font-bold text-white">{dest.name}</h3>
@@ -249,7 +245,7 @@ export function SolarSystem() {
                         to={`/story/${e.id}`}
                         className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3 transition-all duration-300 hover:border-white/30 hover:bg-white/[0.07]"
                       >
-                        <img src={e.image} alt="" className="h-16 w-16 flex-none rounded-xl object-cover" />
+                        <WatermarkedImage src={e.image} alt="" compact className="h-16 w-16 flex-none overflow-hidden rounded-xl" />
                         <span className="min-w-0 flex-1">
                           <span className="block truncate font-display text-lg font-bold text-white">{e.name}</span>
                           <span className="mb-1 block text-xs text-white/50">{e.years}</span>

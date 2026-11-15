@@ -28,6 +28,10 @@
   0% { transform: scale(0.6); opacity: 0.8; }
   100% { transform: scale(2.4); opacity: 0; }
 }
+@keyframes orbit-target-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
 @keyframes drift {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -55,7 +59,6 @@ body {
   color: #e8ecff;
   background: #05071a;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 ::selection { background: rgba(255, 159, 191, 0.4); color: #fff; }
@@ -92,7 +95,12 @@ body {
 .orbit-spin { animation: orbit linear infinite; }
 .orbit-counter { animation: orbit-rev linear infinite; }
 .orbit-system:hover .orbit-spin,
-.orbit-system:hover .orbit-counter { animation-play-state: paused; }
+.orbit-system:hover .orbit-counter,
+.orbit-system:focus-within .orbit-spin,
+.orbit-system:focus-within .orbit-counter { animation-play-state: paused; }
+.orbit-target-ring { animation: orbit-target-ring 2.6s ease-out infinite; }
+.orbit-system:hover .orbit-target-ring,
+.orbit-system:focus-within .orbit-target-ring { animation-play-state: paused; }
 
 .card-tilt { transition: transform 0.5s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s; }
 .card-tilt:hover { transform: translateY(-6px); }

@@ -7,6 +7,7 @@ import { Container, Reveal, SectionHeading } from "../components/ui";
 import { SolarSystem } from "../components/SolarSystem";
 import { Gallery } from "../components/Gallery";
 import { useGoToSection } from "../components/Layout";
+import { WatermarkedImage } from "../components/WatermarkedImage";
 
 const HeroScene = lazy(() => import("../components/three/ModelViewer").then((m) => ({ default: m.HeroScene })));
 
@@ -14,31 +15,41 @@ function Hero() {
   const go = useGoToSection();
   return (
     <section className="relative min-h-[100svh] overflow-hidden">
-      <img src={IMG.pioneer10} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+      <WatermarkedImage src={IMG.pioneer10} alt="" className="absolute inset-0" imageClassName="opacity-40" position="bottom-right" />
       <div className="absolute inset-0 bg-gradient-to-r from-[#05071a] via-[#05071a]/70 to-[#05071a]/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-transparent to-[#05071a]/60" />
 
       {/* 3D Pioneer */}
-      <div className="absolute inset-y-0 right-0 w-full opacity-60 lg:w-[62%] lg:opacity-100" aria-hidden>
+      <div className="pointer-events-none absolute right-[-8%] top-16 h-[46svh] w-[88%] opacity-40 sm:right-0 sm:top-16 sm:h-[56svh] sm:w-[72%] sm:opacity-55 lg:right-0 lg:top-16 lg:h-[78svh] lg:w-[58%] lg:opacity-90" aria-hidden>
         <Suspense fallback={null}>
           <HeroScene />
         </Suspense>
       </div>
 
-      <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-12">
+      <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-16 pt-28 sm:px-8 sm:pt-20 lg:justify-center lg:pb-8 lg:pt-24">
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className="mb-6 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.35em] text-aurora"
+          transition={{ duration: 0.5 }}
+          className="mb-4 max-w-3xl text-xs font-medium text-aurora"
         >
-          <span className="h-px w-10 bg-aurora/60" /> A NASA Space Apps Challenge project
+          <span className="mb-2 flex items-center gap-3 uppercase tracking-[0.35em]">
+            <span className="h-px w-10 bg-aurora/60" /> 2026 NASA Space Apps Challenge
+          </span>
+          <a
+            href="https://www.spaceappschallenge.org/2026/challenges/nasas-discarded-equipment-storytelling/"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-block leading-relaxed underline decoration-white/30 underline-offset-4 hover:text-white"
+          >
+            Abandoned but not Forgotten: Storytelling about NASA’s Discarded Equipment on the Moon and Mars ↗
+          </a>
         </motion.p>
         <motion.h1
-          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
-          className="font-display title-glow max-w-4xl text-[2.9rem] font-extrabold leading-[1.02] text-white sm:text-7xl lg:text-[5.6rem]"
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.2, 0.8, 0.2, 1] }}
+          className="font-display title-glow max-w-4xl text-[2.8rem] font-extrabold leading-[1.02] text-white sm:text-6xl lg:text-[5.2rem]"
         >
           Forgotten
           <br />
@@ -47,25 +58,26 @@ function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="font-display mt-4 text-lg tracking-[0.5em] text-white/45 sm:text-xl"
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="font-display mt-2 text-lg tracking-[0.5em] text-white/45 sm:mt-3 sm:text-xl"
         >
           Stories of forgotten explorers
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-8 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:mt-4 sm:text-base lg:mt-5 lg:text-lg"
         >
-          Every machine has a story. Even when its mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten
-          spacecraft, rovers and probes still resting, drifting or remembered across the Solar System.
+          A story-first introduction for school-age space enthusiasts to NASA hardware and the science it enabled. Every machine has a story. Even when its
+          mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten spacecraft, rovers and probes still resting, drifting or
+          remembered across the Solar System.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="pointer-events-auto mt-10 flex flex-wrap items-center gap-4"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="pointer-events-auto mt-5 flex flex-wrap items-center gap-4 sm:mt-3"
         >
           <button
             onClick={() => go("solar-system")}
@@ -87,8 +99,8 @@ function Hero() {
         <motion.dl
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-6"
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-white/10 pt-4"
         >
           {[
             ["5", "destinations"],
@@ -153,40 +165,52 @@ function WhereAreThey() {
 function Destinations() {
   const [active, setActive] = useState(0);
   return (
-    <section id="destinations" className="relative py-28">
+    <section id="destinations" className="relative py-16 sm:py-20 lg:py-28">
       <Container>
         <SectionHeading kicker="Five destinations" title="Choose a door.">
           Each world holds two machines. Start anywhere: the Moon, Venus, Mars, deep space or the asteroids.
         </SectionHeading>
-        <div className="flex flex-col gap-4 lg:h-[36rem] lg:flex-row">
+        <div className="flex flex-col gap-3 lg:h-[36rem] lg:flex-row lg:gap-4">
           {destinations.map((d, i) => {
             const on = active === i;
             const eqs = d.equipmentIds.map((id) => getEquipment(id)!);
             return (
-              <Link
+              <article
                 key={d.id}
-                to={`/destination/${d.id}`}
                 onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                className={`group relative h-80 overflow-hidden rounded-3xl border border-white/10 transition-[flex] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] lg:h-full ${on ? "lg:flex-[3.4]" : "lg:flex-1"}`}
+                className={`group relative overflow-hidden rounded-3xl border border-white/10 transition-[height,flex] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] ${on ? "h-[22rem] sm:h-[25rem] lg:h-full lg:flex-[3.4]" : "h-[4.75rem] sm:h-[5rem] lg:h-full lg:flex-1"}`}
               >
-                <img src={d.image} alt={`${d.name} illustration`} loading="lazy" className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ${on ? "scale-100" : "scale-110"}`} />
+                <WatermarkedImage
+                  src={d.image}
+                  alt={`AI-generated anime-style illustration of ${d.name}`}
+                  loading="lazy"
+                  className="absolute inset-0"
+                  imageClassName={`transition-transform duration-[1400ms] ${on ? "scale-100" : "scale-110"}`}
+                />
                 <div className={`absolute inset-0 transition-opacity duration-700 ${on ? "bg-gradient-to-t from-[#05071a] via-[#05071a]/30 to-transparent" : "bg-[#05071a]/55 lg:bg-[#05071a]/60"}`} />
+                <button
+                  type="button"
+                  aria-label={`Show ${d.name} destination`}
+                  aria-pressed={on}
+                  onClick={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className="absolute inset-0 z-10 cursor-pointer"
+                />
                 <span
                   aria-hidden
-                  className={`font-display absolute left-1/2 top-8 -translate-x-1/2 text-5xl font-bold transition-all duration-700 ${on ? "opacity-0 lg:-translate-y-4" : "opacity-90"} lg:hidden`}
+                  className={`font-display pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-xl font-bold transition-all duration-700 lg:hidden ${on ? "opacity-0" : "opacity-100"}`}
                   style={{ color: d.accent }}
                 >
-                  {d.name}
+                  {d.name.replace("The ", "")}
                 </span>
                 {/* collapsed vertical label (desktop) */}
-                <div className={`absolute inset-0 hidden flex-col items-center justify-between py-8 transition-opacity duration-500 lg:flex ${on ? "opacity-0" : "opacity-100"}`}>
+                <div aria-hidden className={`pointer-events-none absolute inset-0 z-20 hidden flex-col items-center justify-between py-8 transition-opacity duration-500 lg:flex ${on ? "opacity-0" : "opacity-100"}`}>
                   <span className="font-display text-4xl font-bold" style={{ color: d.accent }}>{d.name.replace("The ", "").charAt(0)}</span>
                   <span className="font-display text-lg text-white/80">{d.name.replace("The ", "")}</span>
                 </div>
-                <div className={`absolute inset-x-0 bottom-0 p-6 transition-all duration-700 sm:p-8 ${on ? "translate-y-0 opacity-100" : "opacity-100 lg:translate-y-6 lg:opacity-0"}`}>
+                <div aria-hidden={!on} className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-4 transition-all duration-700 sm:p-8 ${on ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}>
                   <p className="text-xs tracking-[0.3em]" style={{ color: d.accent }}>{d.name.toUpperCase()}</p>
-                  <h3 className="font-display mt-1 text-3xl font-bold text-white sm:text-4xl">{d.name}</h3>
+                  <h3 className="font-display mt-1 text-2xl font-bold text-white sm:text-4xl">{d.name}</h3>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-white/70">{d.tagline}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {eqs.map((e) => (
@@ -195,11 +219,16 @@ function Destinations() {
                       </span>
                     ))}
                   </div>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white transition-all group-hover:gap-4" style={{ color: d.accent }}>
+                  <Link
+                    to={`/destination/${d.id}`}
+                    tabIndex={on ? 0 : -1}
+                    className="pointer-events-auto mt-5 inline-flex items-center gap-2 text-sm font-medium text-white transition-all hover:gap-4"
+                    style={{ color: d.accent }}
+                  >
                     Enter {d.name.replace("The ", "")} →
-                  </span>
+                  </Link>
                 </div>
-              </Link>
+              </article>
             );
           })}
         </div>

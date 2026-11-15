@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { destinations, equipmentForDestination, getDestination, STATUS_META } from "../data";
 import { Container, Reveal, SectionHeading } from "../components/ui";
 import { EquipmentCard } from "../components/EquipmentCard";
+import { WatermarkedImage } from "../components/WatermarkedImage";
 
 export default function Destination() {
   const { id } = useParams();
@@ -16,14 +17,17 @@ export default function Destination() {
   return (
     <>
       <section className="relative flex min-h-[78svh] items-end overflow-hidden">
-        <motion.img
+        <WatermarkedImage
           key={dest.id}
           src={dest.image}
-          alt={`${dest.name} — anime-style illustration`}
-          initial={{ scale: 1.15, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="absolute inset-0 h-full w-full object-cover"
+          alt={`AI-generated anime-style illustration of ${dest.name}`}
+          className="absolute inset-0"
+          position="bottom-right"
+          imageMotionProps={{
+            initial: { scale: 1.15, opacity: 0 },
+            animate: { scale: 1, opacity: 1 },
+            transition: { duration: 1.8, ease: [0.2, 0.8, 0.2, 1] },
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-[#05071a]/50 to-[#05071a]/20" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#05071a]/80 to-transparent" />
@@ -114,7 +118,13 @@ export default function Destination() {
                 to={`/destination/${d.id}`}
                 className="group relative flex h-40 items-end overflow-hidden rounded-3xl border border-white/10 p-6"
               >
-                <img src={d.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <WatermarkedImage
+                  src={d.image}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0"
+                  imageClassName="transition-transform duration-1000 group-hover:scale-110"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] to-[#05071a]/40" />
                 <div className="relative">
                   <p className="text-xs tracking-widest text-white/50">{label}</p>

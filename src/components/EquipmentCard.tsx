@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import type { Equipment } from "../data";
 import { getDestination } from "../data";
 import { StatusBadge } from "./StatusBadge";
+import { WatermarkedImage } from "./WatermarkedImage";
 
 export function EquipmentCard({ eq, index = 0, tall = false }: { eq: Equipment; index?: number; tall?: boolean }) {
   const dest = getDestination(eq.destination)!;
@@ -21,11 +22,12 @@ export function EquipmentCard({ eq, index = 0, tall = false }: { eq: Equipment; 
         }`}
         style={{ ["--accent" as string]: dest.accent }}
       >
-        <img
+        <WatermarkedImage
           src={eq.image}
-          alt={`Anime-style illustration of ${eq.name}`}
+          alt={`AI-generated anime-style illustration of ${eq.name}`}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+          className="absolute inset-0"
+          imageClassName="transition-transform duration-[1200ms] ease-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-[#05071a]/55 to-transparent" />
         <div
