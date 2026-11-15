@@ -20,7 +20,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-transparent to-[#05071a]/60" />
 
       {/* 3D Pioneer */}
-      <div className="pointer-events-none absolute right-[-8%] top-16 h-[46svh] w-[88%] opacity-40 sm:right-0 sm:top-16 sm:h-[56svh] sm:w-[72%] sm:opacity-55 lg:right-0 lg:top-16 lg:h-[78svh] lg:w-[58%] lg:opacity-90" aria-hidden>
+      <div className="pointer-events-none absolute right-[-8%] top-16 h-[46svh] w-[88%] opacity-40 sm:right-0 sm:top-16 sm:h-[56svh] sm:w-[72%] sm:opacity-55 lg:right-0 lg:top-16 lg:h-[88svh] lg:w-[58%] lg:opacity-90" aria-hidden>
         <Suspense fallback={null}>
           <HeroScene />
         </Suspense>
@@ -33,16 +33,13 @@ function Hero() {
           transition={{ duration: 0.5 }}
           className="mb-4 max-w-3xl text-xs font-medium text-aurora"
         >
-          <span className="mb-2 flex items-center gap-3 uppercase tracking-[0.35em]">
-            <span className="h-px w-10 bg-aurora/60" /> 2026 NASA Space Apps Challenge
-          </span>
           <a
             href="https://www.spaceappschallenge.org/2026/challenges/nasas-discarded-equipment-storytelling/"
             target="_blank"
             rel="noreferrer noopener"
-            className="inline-block leading-relaxed underline decoration-white/30 underline-offset-4 hover:text-white"
+            className="inline-flex items-center gap-3 uppercase tracking-[0.28em] hover:text-white"
           >
-            Abandoned but not Forgotten: Storytelling about NASA’s Discarded Equipment on the Moon and Mars ↗
+            <span className="h-px w-10 bg-aurora/60" /> A 2026 NASA Space Apps Challenge project ↗
           </a>
         </motion.p>
         <motion.h1
@@ -69,9 +66,8 @@ function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:mt-4 sm:text-base lg:mt-5 lg:text-lg"
         >
-          A story-first introduction for school-age space enthusiasts to NASA hardware and the science it enabled. Every machine has a story. Even when its
-          mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten spacecraft, rovers and probes still resting, drifting or
-          remembered across the Solar System.
+          Every machine has a story. Even when its mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten spacecraft, rovers
+          and probes still resting, drifting or remembered across the Solar System.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

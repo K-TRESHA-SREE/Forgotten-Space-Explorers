@@ -268,7 +268,9 @@ export function OpportunityModel() {
 
 /* ─────────────────────────── DEEP SPACE ─────────────────────────── */
 
-export function PioneerModel({ saturn }: { saturn?: boolean }) {
+export function PioneerModel({ saturn, heroComposition = false }: { saturn?: boolean; heroComposition?: boolean }) {
+  const planetPosition: V3 = heroComposition ? [1.7, -2.85, -7] : [-3.2, -3, -7];
+  const magnetometerTip = heroComposition ? 3.7 : 3;
   const rimPts: V3[] = Array.from({ length: 3 }).map((_, i) => {
     const a = (i * 2 * Math.PI) / 3 + Math.PI / 2;
     return [Math.cos(a) * 1.3, Math.sin(a) * 1.3, 0.02];
@@ -283,7 +285,7 @@ export function PioneerModel({ saturn }: { saturn?: boolean }) {
       {saturn ? (
         <GasGiant p={[-3.2, -3, -7]} radius={2.2} ring bands={["#e8d3a0", "#d8bd86", "#efe0b4", "#cba96d"]} />
       ) : (
-        <GasGiant p={[-3.2, -3, -7]} radius={2.6} bands={["#d9b99a", "#a97b58", "#ead3b7", "#b88b6a", "#f0e1c9", "#8d5e44"]} />
+        <GasGiant p={planetPosition} radius={heroComposition ? 2.9 : 2.6} bands={["#d9b99a", "#a97b58", "#ead3b7", "#b88b6a", "#f0e1c9", "#8d5e44"]} />
       )}
       {/* main dish */}
       <Dish radius={1.37} depth={0.33} />
@@ -329,8 +331,8 @@ export function PioneerModel({ saturn }: { saturn?: boolean }) {
         );
       })}
       {/* magnetometer boom */}
-      <Tube a={[0, 0.5, -0.62]} b={[0, 3.0, -0.62]} r={0.018} color="#cdd1da" />
-      <Box p={[0, 3.05, -0.62]} s={[0.14, 0.14, 0.14]} color="#e9c46a" />
+      <Tube a={[0, 0.5, -0.62]} b={[0, magnetometerTip, -0.62]} r={0.018} color="#cdd1da" />
+      <Box p={[0, magnetometerTip + 0.05, -0.62]} s={[0.14, 0.14, 0.14]} color="#e9c46a" />
       {/* the plaque, mounted on antenna supports */}
       <group position={[-0.95, -0.55, 0.0]} rotation={[0, 0.5, -0.4]}>
         <Box s={[0.46, 0.3, 0.012]} color="#e8c458" metalness={0.9} roughness={0.25} emissive="#7a5a10" />
