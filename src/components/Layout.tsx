@@ -161,7 +161,7 @@ export function Footer() {
             <span className="shimmer-text">Even when its mission ends, its legacy continues.</span>
           </p>
           <p className="mt-6 max-w-md text-sm leading-relaxed text-white/55">
-            A storytelling project created for the NASA Space Apps Challenge. Dates, numbers and outcomes come from NASA, JPL and
+            A storytelling project for the 2026 NASA Space Apps Challenge. Dates, numbers and outcomes come from NASA, JPL and
             mission-partner sources. First-person narration is always an imagined dramatisation.
           </p>
         </div>
@@ -186,8 +186,8 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/5 px-5 py-6 text-center text-xs leading-relaxed text-white/35 sm:px-8">
-        An independent educational project. Not affiliated with or endorsed by NASA. Illustrations are AI-assisted anime-style artwork, and 3D
-        models are simplified artistic reconstructions, not official engineering models.
+        An independent educational project. Not affiliated with or endorsed by NASA. AI-generated illustrations are visibly watermarked; NASA archival photos
+        are not. 3D models are simplified artistic reconstructions, not official engineering models.
       </div>
     </footer>
   );

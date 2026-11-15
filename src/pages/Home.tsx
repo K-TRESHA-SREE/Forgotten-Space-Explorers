@@ -7,6 +7,7 @@ import { Container, Reveal, SectionHeading } from "../components/ui";
 import { SolarSystem } from "../components/SolarSystem";
 import { Gallery } from "../components/Gallery";
 import { useGoToSection } from "../components/Layout";
+import { WatermarkedImage } from "../components/WatermarkedImage";
 
 const HeroScene = lazy(() => import("../components/three/ModelViewer").then((m) => ({ default: m.HeroScene })));
 
@@ -14,7 +15,7 @@ function Hero() {
   const go = useGoToSection();
   return (
     <section className="relative min-h-[100svh] overflow-hidden">
-      <img src={IMG.pioneer10} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+      <WatermarkedImage src={IMG.pioneer10} alt="" className="absolute inset-0" imageClassName="opacity-40" position="bottom-right" />
       <div className="absolute inset-0 bg-gradient-to-r from-[#05071a] via-[#05071a]/70 to-[#05071a]/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-transparent to-[#05071a]/60" />
 
@@ -30,9 +31,19 @@ function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
-          className="mb-6 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.35em] text-aurora"
+          className="mb-6 max-w-3xl text-xs font-medium text-aurora"
         >
-          <span className="h-px w-10 bg-aurora/60" /> A NASA Space Apps Challenge project
+          <span className="mb-2 flex items-center gap-3 uppercase tracking-[0.35em]">
+            <span className="h-px w-10 bg-aurora/60" /> 2026 NASA Space Apps Challenge
+          </span>
+          <a
+            href="https://www.spaceappschallenge.org/2026/challenges/nasas-discarded-equipment-storytelling/"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-block leading-relaxed underline decoration-white/30 underline-offset-4 hover:text-white"
+          >
+            Abandoned but not Forgotten: Storytelling about NASA’s Discarded Equipment on the Moon and Mars ↗
+          </a>
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
@@ -58,8 +69,9 @@ function Hero() {
           transition={{ duration: 1, delay: 0.8 }}
           className="mt-8 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl"
         >
-          Every machine has a story. Even when its mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten
-          spacecraft, rovers and probes still resting, drifting or remembered across the Solar System.
+          A story-first introduction for school-age space enthusiasts to NASA hardware and the science it enabled. Every machine has a story. Even when its
+          mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten spacecraft, rovers and probes still resting, drifting or
+          remembered across the Solar System.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -170,7 +182,13 @@ function Destinations() {
                 onFocus={() => setActive(i)}
                 className={`group relative h-80 overflow-hidden rounded-3xl border border-white/10 transition-[flex] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] lg:h-full ${on ? "lg:flex-[3.4]" : "lg:flex-1"}`}
               >
-                <img src={d.image} alt={`${d.name} illustration`} loading="lazy" className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ${on ? "scale-100" : "scale-110"}`} />
+                <WatermarkedImage
+                  src={d.image}
+                  alt={`AI-generated anime-style illustration of ${d.name}`}
+                  loading="lazy"
+                  className="absolute inset-0"
+                  imageClassName={`transition-transform duration-[1400ms] ${on ? "scale-100" : "scale-110"}`}
+                />
                 <div className={`absolute inset-0 transition-opacity duration-700 ${on ? "bg-gradient-to-t from-[#05071a] via-[#05071a]/30 to-transparent" : "bg-[#05071a]/55 lg:bg-[#05071a]/60"}`} />
                 <span
                   aria-hidden

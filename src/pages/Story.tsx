@@ -8,11 +8,12 @@ import { Narrator } from "../components/Narrator";
 import { Timeline } from "../components/Timeline";
 import { FactSheet } from "../components/FactSheet";
 import { FlipCards } from "../components/FlipCards";
+import { WatermarkedImage } from "../components/WatermarkedImage";
 
 const ModelViewer = lazy(() => import("../components/three/ModelViewer").then((m) => ({ default: m.ModelViewer })));
 
 function Illustration({ src, alt }: { src: string; alt: string }) {
-  return <img src={src} alt={alt} className="h-full w-full object-cover" />;
+  return <WatermarkedImage src={src} alt={alt} className="h-full w-full" />;
 }
 
 export default function Story() {
@@ -37,15 +38,18 @@ export default function Story() {
     <>
       {/* ───────── Hero ───────── */}
       <section ref={hero} className="relative flex min-h-[84svh] items-end overflow-hidden">
-        <motion.img
+        <WatermarkedImage
           key={eq.id}
           src={eq.image}
-          alt={`Anime-style illustration of ${eq.name}`}
-          style={{ y }}
-          initial={{ scale: 1.15, opacity: 0 }}
-          animate={{ scale: 1.05, opacity: 1 }}
-          transition={{ duration: 1.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="absolute inset-0 h-[115%] w-full object-cover"
+          alt={`AI-generated anime-style illustration of ${eq.name}`}
+          className="absolute inset-0 h-[115%]"
+          position="bottom-right"
+          imageMotionProps={{
+            style: { y },
+            initial: { scale: 1.15, opacity: 0 },
+            animate: { scale: 1.05, opacity: 1 },
+            transition: { duration: 1.8, ease: [0.2, 0.8, 0.2, 1] },
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-[#05071a]/45 to-[#05071a]/25" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#05071a]/80 via-transparent to-transparent" />
@@ -98,13 +102,13 @@ export default function Story() {
       {/* ───────── Listen + 3D ───────── */}
       <section id="listen" className="relative scroll-mt-4 py-20">
         <Container>
-          <div className="grid items-stretch gap-8 lg:grid-cols-2">
-            <Reveal>
+          <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] items-stretch gap-8 lg:grid-cols-2">
+            <Reveal className="min-w-0">
               <Narrator chapters={eq.narration} name={eq.name} accent="#ff9fbf" />
             </Reveal>
-            <Reveal delay={0.1} className="flex flex-col">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <div role="tablist" aria-label="View" className="inline-flex rounded-full border border-white/15 p-1">
+            <Reveal delay={0.1} className="flex min-w-0 flex-col">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+                <div role="tablist" aria-label="View" className="inline-flex flex-wrap rounded-full border border-white/15 p-1">
                   {(
                     [
                       ["3d", "3D model"],
@@ -123,18 +127,20 @@ export default function Story() {
                     </button>
                   ))}
                 </div>
-                <span className="hidden text-xs text-white/40 sm:block">{view === "3d" ? "Drag to rotate · scroll to zoom" : "AI-assisted artwork"}</span>
+                <span className="hidden text-xs text-white/40 sm:block">
+                  {view === "3d" ? "Drag to rotate · scroll to zoom" : view === "art" ? "AI-generated artwork" : "NASA archival photograph"}
+                </span>
               </div>
               <div className="relative min-h-[26rem] flex-1 overflow-hidden rounded-[2rem] border border-white/10 lg:min-h-[34rem]">
                 {view === "3d" ? (
                   <Suspense fallback={<div className="flex h-full min-h-[26rem] items-center justify-center text-sm text-white/50">Assembling model…</div>}>
                     <div className="absolute inset-0">
-                      <ModelViewer model={eq.model} fallback={<Illustration src={eq.image} alt={`Illustration of ${eq.name}`} />} />
+                      <ModelViewer model={eq.model} fallback={                      <Illustration src={eq.image} alt={`AI-generated anime-style illustration of ${eq.name}`} />} />
                     </div>
                   </Suspense>
                 ) : view === "art" ? (
                   <motion.div key="art" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0">
-                    <Illustration src={eq.image} alt={`Anime-style illustration of ${eq.name}`} />
+                    <Illustration src={eq.image} alt={`AI-generated anime-style illustration of ${eq.name}`} />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -166,7 +172,7 @@ export default function Story() {
                 {view === "3d"
                   ? "A simplified artistic reconstruction of the machine built for this site, not an official engineering model. Proportions and details are approximate."
                   : view === "art"
-                    ? "Anime-style illustration created with AI assistance for storytelling. It is an interpretation, not a photograph."
+                    ? "AI-generated anime-style illustration for storytelling. It is an interpretation, not a photograph."
                     : "NASA archival imagery. Some views show the spacecraft during preparation or from a distance."}
               </p>
             </Reveal>
@@ -311,7 +317,13 @@ export default function Story() {
               { e: next, label: "Next story →" },
             ].map(({ e, label }) => (
               <Link key={label} to={`/story/${e.id}`} className="group relative flex h-44 items-end overflow-hidden rounded-3xl border border-white/10 p-6">
-                <img src={e.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <WatermarkedImage
+                  src={e.image}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0"
+                  imageClassName="transition-transform duration-1000 group-hover:scale-110"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] to-[#05071a]/40" />
                 <div className="relative">
                   <p className="text-xs tracking-widest text-white/55">{label}</p>

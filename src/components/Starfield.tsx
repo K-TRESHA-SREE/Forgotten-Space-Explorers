@@ -18,7 +18,7 @@ export function Starfield() {
     const shooters: { x: number; y: number; vx: number; vy: number; life: number }[] = [];
 
     const resize = () => {
-      w = window.innerWidth;
+      w = document.documentElement.clientWidth;
       h = window.innerHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;

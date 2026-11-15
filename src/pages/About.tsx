@@ -8,7 +8,7 @@ const TECH = [
   ["Framer Motion", "Smooth page transitions, scroll reveals and microinteractions, which respect the ‘reduce motion’ setting."],
   ["Web Speech API", "Free, built-in browser text-to-speech powers the narration with play, pause and chapter controls."],
   ["Tailwind CSS", "Responsive design from phones to wide screens."],
-  ["AI-assisted illustration", "The anime-style artwork was generated with an AI image tool and compressed for fast loading. It is interpretive art, not photography."],
+  ["AI-generated artwork", "The anime-style illustrations were generated with an AI image tool. Every displayed copy carries a visible AI-generated watermark; NASA archival photographs are kept separate and are not watermarked."],
 ];
 
 const UNCERTAIN = [
@@ -25,6 +25,24 @@ export default function About() {
         <SectionHeading kicker="Facts, method & sources" title={<>How we kept it <span className="shimmer-text">honest.</span></>}>
           This project mixes emotion and evidence on purpose, but never lets one pretend to be the other.
         </SectionHeading>
+
+        <div className="mb-12 rounded-3xl border border-aurora/25 bg-aurora/[0.04] p-6 sm:p-8">
+          <p className="text-xs uppercase tracking-[0.25em] text-aurora">2026 NASA Space Apps Challenge</p>
+          <h2 className="font-display mt-3 text-xl font-bold text-white sm:text-2xl">
+            <a
+              href="https://www.spaceappschallenge.org/2026/challenges/nasas-discarded-equipment-storytelling/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="underline decoration-white/30 underline-offset-4 hover:decoration-white"
+            >
+              Abandoned but not Forgotten: Storytelling about NASA’s Discarded Equipment on the Moon and Mars ↗
+            </a>
+          </h2>
+          <p className="mt-4 max-w-4xl leading-relaxed text-white/70">
+            This experience introduces school-age space enthusiasts to NASA hardware and the science it enabled. It focuses on the challenge’s Moon-and-Mars
+            storytelling prompt while also exploring related mission stories elsewhere in the Solar System.
+          </p>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <Reveal>
