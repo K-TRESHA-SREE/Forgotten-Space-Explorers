@@ -2,6 +2,8 @@
 
 Forgotten Space Explorers is an interactive, story-driven introduction to NASA spacecraft, landers, and rovers left behind across the Solar System. It combines source-linked mission facts with imaginative first-person narration, interactive 3D models, an orrery, timelines, and NASA archival photographs.
 
+**Live site:** [forgotten-space-explorers-final.vercel.app](https://forgotten-space-explorers-final.vercel.app/)
+
 ## 2026 NASA Space Apps Challenge
 
 This project responds to the 2026 NASA Space Apps Challenge:
