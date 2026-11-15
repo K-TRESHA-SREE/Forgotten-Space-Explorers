@@ -89,7 +89,8 @@ export function ModelViewer({
 function Floating() {
   const g = useRef<Group>(null);
   const { size } = useThree();
-  const scale = size.width < 640 ? 0.5 : size.width < 1024 ? 0.56 : 0.62;
+  const heroComposition = size.width >= 640;
+  const scale = size.width < 400 ? 0.5 : Math.min(1.05, 0.56 + Math.max(0, size.width - 640) / 450);
   useFrame((state, dt) => {
     if (!g.current) return;
     const t = state.clock.elapsedTime;
@@ -97,11 +98,12 @@ function Floating() {
     const ty = -state.pointer.y * 0.25;
     g.current.rotation.y += (tx + Math.sin(t * 0.3) * 0.25 - g.current.rotation.y) * Math.min(1, dt * 2);
     g.current.rotation.x += (ty - g.current.rotation.x) * Math.min(1, dt * 2);
-    g.current.position.y = Math.sin(t * 0.8) * 0.12;
+    g.current.position.x = heroComposition ? -1 : 0;
+    g.current.position.y = (heroComposition ? -0.55 : 0) + Math.sin(t * 0.8) * 0.12;
   });
   return (
     <group ref={g} scale={scale}>
-      <PioneerModel />
+      <PioneerModel heroComposition={heroComposition} />
     </group>
   );
 }
