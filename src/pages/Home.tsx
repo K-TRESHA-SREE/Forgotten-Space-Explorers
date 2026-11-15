@@ -20,18 +20,18 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-transparent to-[#05071a]/60" />
 
       {/* 3D Pioneer */}
-      <div className="pointer-events-none absolute right-[-8%] top-16 h-[46svh] w-[88%] opacity-40 sm:right-0 sm:top-16 sm:h-[56svh] sm:w-[72%] sm:opacity-55 lg:inset-y-0 lg:top-0 lg:h-auto lg:w-[62%] lg:opacity-100" aria-hidden>
+      <div className="pointer-events-none absolute right-[-8%] top-16 h-[46svh] w-[88%] opacity-40 sm:right-0 sm:top-16 sm:h-[56svh] sm:w-[72%] sm:opacity-55 lg:right-0 lg:top-16 lg:h-[78svh] lg:w-[58%] lg:opacity-90" aria-hidden>
         <Suspense fallback={null}>
           <HeroScene />
         </Suspense>
       </div>
 
-      <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-12">
+      <div className="pointer-events-none relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-16 pt-28 sm:px-8 sm:pt-20 lg:justify-center lg:pb-8 lg:pt-24">
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className="mb-6 max-w-3xl text-xs font-medium text-aurora"
+          transition={{ duration: 0.5 }}
+          className="mb-4 max-w-3xl text-xs font-medium text-aurora"
         >
           <span className="mb-2 flex items-center gap-3 uppercase tracking-[0.35em]">
             <span className="h-px w-10 bg-aurora/60" /> 2026 NASA Space Apps Challenge
@@ -46,10 +46,10 @@ function Hero() {
           </a>
         </motion.p>
         <motion.h1
-          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
-          className="font-display title-glow max-w-4xl text-[2.9rem] font-extrabold leading-[1.02] text-white sm:text-7xl lg:text-[5.6rem]"
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.2, 0.8, 0.2, 1] }}
+          className="font-display title-glow max-w-4xl text-[2.8rem] font-extrabold leading-[1.02] text-white sm:text-6xl lg:text-[5.2rem]"
         >
           Forgotten
           <br />
@@ -58,16 +58,16 @@ function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="font-display mt-4 text-lg tracking-[0.5em] text-white/45 sm:text-xl"
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="font-display mt-2 text-lg tracking-[0.5em] text-white/45 sm:mt-3 sm:text-xl"
         >
           Stories of forgotten explorers
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-8 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-4 max-w-2xl text-base leading-relaxed text-white/75 sm:mt-4 sm:text-base lg:mt-5 lg:text-lg"
         >
           A story-first introduction for school-age space enthusiasts to NASA hardware and the science it enabled. Every machine has a story. Even when its
           mission ends, <em className="not-italic text-solar">its legacy continues.</em> Meet ten spacecraft, rovers and probes still resting, drifting or
@@ -76,8 +76,8 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="pointer-events-auto mt-10 flex flex-wrap items-center gap-4"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="pointer-events-auto mt-5 flex flex-wrap items-center gap-4 sm:mt-3"
         >
           <button
             onClick={() => go("solar-system")}
@@ -99,8 +99,8 @@ function Hero() {
         <motion.dl
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
-          className="mt-14 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-6"
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-8 grid max-w-xl grid-cols-3 gap-4 border-t border-white/10 pt-4"
         >
           {[
             ["5", "destinations"],

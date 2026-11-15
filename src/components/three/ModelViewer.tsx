@@ -89,7 +89,7 @@ export function ModelViewer({
 function Floating() {
   const g = useRef<Group>(null);
   const { size } = useThree();
-  const scale = size.width < 640 ? 0.7 : size.width < 1024 ? 0.84 : 1;
+  const scale = size.width < 640 ? 0.5 : size.width < 1024 ? 0.56 : 0.62;
   useFrame((state, dt) => {
     if (!g.current) return;
     const t = state.clock.elapsedTime;

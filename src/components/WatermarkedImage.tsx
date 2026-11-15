@@ -1,4 +1,5 @@
 import { motion, type MotionProps } from "framer-motion";
+import { cn } from "../utils/cn";
 
 type WatermarkedImageProps = {
   src: string;
@@ -22,7 +23,7 @@ export function WatermarkedImage({
   imageMotionProps,
 }: WatermarkedImageProps) {
   return (
-    <div className={`pointer-events-none relative ${className}`}>
+    <div className={cn("pointer-events-none relative", className)}>
       <motion.img
         {...imageMotionProps}
         src={src}
