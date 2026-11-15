@@ -20,7 +20,7 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-[#05071a] via-transparent to-[#05071a]/60" />
 
       {/* 3D Pioneer */}
-      <div className="absolute inset-y-0 right-0 w-full opacity-60 lg:w-[62%] lg:opacity-100" aria-hidden>
+      <div className="pointer-events-none absolute right-[-8%] top-16 h-[46svh] w-[88%] opacity-40 sm:right-0 sm:top-16 sm:h-[56svh] sm:w-[72%] sm:opacity-55 lg:inset-y-0 lg:top-0 lg:h-auto lg:w-[62%] lg:opacity-100" aria-hidden>
         <Suspense fallback={null}>
           <HeroScene />
         </Suspense>
@@ -165,22 +165,20 @@ function WhereAreThey() {
 function Destinations() {
   const [active, setActive] = useState(0);
   return (
-    <section id="destinations" className="relative py-28">
+    <section id="destinations" className="relative py-16 sm:py-20 lg:py-28">
       <Container>
         <SectionHeading kicker="Five destinations" title="Choose a door.">
           Each world holds two machines. Start anywhere: the Moon, Venus, Mars, deep space or the asteroids.
         </SectionHeading>
-        <div className="flex flex-col gap-4 lg:h-[36rem] lg:flex-row">
+        <div className="flex flex-col gap-3 lg:h-[36rem] lg:flex-row lg:gap-4">
           {destinations.map((d, i) => {
             const on = active === i;
             const eqs = d.equipmentIds.map((id) => getEquipment(id)!);
             return (
-              <Link
+              <article
                 key={d.id}
-                to={`/destination/${d.id}`}
                 onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                className={`group relative h-80 overflow-hidden rounded-3xl border border-white/10 transition-[flex] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] lg:h-full ${on ? "lg:flex-[3.4]" : "lg:flex-1"}`}
+                className={`group relative overflow-hidden rounded-3xl border border-white/10 transition-[height,flex] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] ${on ? "h-[22rem] sm:h-[25rem] lg:h-full lg:flex-[3.4]" : "h-[4.75rem] sm:h-[5rem] lg:h-full lg:flex-1"}`}
               >
                 <WatermarkedImage
                   src={d.image}
@@ -190,21 +188,29 @@ function Destinations() {
                   imageClassName={`transition-transform duration-[1400ms] ${on ? "scale-100" : "scale-110"}`}
                 />
                 <div className={`absolute inset-0 transition-opacity duration-700 ${on ? "bg-gradient-to-t from-[#05071a] via-[#05071a]/30 to-transparent" : "bg-[#05071a]/55 lg:bg-[#05071a]/60"}`} />
+                <button
+                  type="button"
+                  aria-label={`Show ${d.name} destination`}
+                  aria-pressed={on}
+                  onClick={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className="absolute inset-0 z-10 cursor-pointer"
+                />
                 <span
                   aria-hidden
-                  className={`font-display absolute left-1/2 top-8 -translate-x-1/2 text-5xl font-bold transition-all duration-700 ${on ? "opacity-0 lg:-translate-y-4" : "opacity-90"} lg:hidden`}
+                  className={`font-display pointer-events-none absolute inset-0 z-20 flex items-center justify-center text-xl font-bold transition-all duration-700 lg:hidden ${on ? "opacity-0" : "opacity-100"}`}
                   style={{ color: d.accent }}
                 >
-                  {d.name}
+                  {d.name.replace("The ", "")}
                 </span>
                 {/* collapsed vertical label (desktop) */}
-                <div className={`absolute inset-0 hidden flex-col items-center justify-between py-8 transition-opacity duration-500 lg:flex ${on ? "opacity-0" : "opacity-100"}`}>
+                <div aria-hidden className={`pointer-events-none absolute inset-0 z-20 hidden flex-col items-center justify-between py-8 transition-opacity duration-500 lg:flex ${on ? "opacity-0" : "opacity-100"}`}>
                   <span className="font-display text-4xl font-bold" style={{ color: d.accent }}>{d.name.replace("The ", "").charAt(0)}</span>
                   <span className="font-display text-lg text-white/80">{d.name.replace("The ", "")}</span>
                 </div>
-                <div className={`absolute inset-x-0 bottom-0 p-6 transition-all duration-700 sm:p-8 ${on ? "translate-y-0 opacity-100" : "opacity-100 lg:translate-y-6 lg:opacity-0"}`}>
+                <div aria-hidden={!on} className={`pointer-events-none absolute inset-x-0 bottom-0 z-20 p-4 transition-all duration-700 sm:p-8 ${on ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}>
                   <p className="text-xs tracking-[0.3em]" style={{ color: d.accent }}>{d.name.toUpperCase()}</p>
-                  <h3 className="font-display mt-1 text-3xl font-bold text-white sm:text-4xl">{d.name}</h3>
+                  <h3 className="font-display mt-1 text-2xl font-bold text-white sm:text-4xl">{d.name}</h3>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-white/70">{d.tagline}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {eqs.map((e) => (
@@ -213,11 +219,16 @@ function Destinations() {
                       </span>
                     ))}
                   </div>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white transition-all group-hover:gap-4" style={{ color: d.accent }}>
+                  <Link
+                    to={`/destination/${d.id}`}
+                    tabIndex={on ? 0 : -1}
+                    className="pointer-events-auto mt-5 inline-flex items-center gap-2 text-sm font-medium text-white transition-all hover:gap-4"
+                    style={{ color: d.accent }}
+                  >
                     Enter {d.name.replace("The ", "")} →
-                  </span>
+                  </Link>
                 </div>
-              </Link>
+              </article>
             );
           })}
         </div>

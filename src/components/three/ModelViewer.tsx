@@ -1,5 +1,5 @@
 import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import type { Group } from "three";
 import { getModelConfig, PioneerModel } from "./models";
@@ -88,6 +88,8 @@ export function ModelViewer({
 
 function Floating() {
   const g = useRef<Group>(null);
+  const { size } = useThree();
+  const scale = size.width < 640 ? 0.7 : size.width < 1024 ? 0.84 : 1;
   useFrame((state, dt) => {
     if (!g.current) return;
     const t = state.clock.elapsedTime;
@@ -98,7 +100,7 @@ function Floating() {
     g.current.position.y = Math.sin(t * 0.8) * 0.12;
   });
   return (
-    <group ref={g}>
+    <group ref={g} scale={scale}>
       <PioneerModel />
     </group>
   );
